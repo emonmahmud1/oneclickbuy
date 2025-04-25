@@ -29,3 +29,6 @@ const productSlicer = createSlice({
 });
 
 export default productSlicer.reducer;
+export const selectProductById = (state, id) => {
+  return state.items.find(item => item.id == parseInt(id));
+};

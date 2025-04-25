@@ -6,18 +6,19 @@ import { fetchProducts } from "../../redux/features/products/productsSlice";
 const Home = () => {
   const dispatch = useDispatch();
   const { items, isloading, error } = useSelector((state) => state.products);
+  // const singleCart = useSelector((state)=>productCountCartById(state.carts,id))
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);
  
-  const products = [1, 2, 3, 4];
+
   if (isloading) {
     return <p>loding..........!!!!!!</p>;
   }
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
       {items.map((product, idx) => (
-        <Product key={idx} items={product} />
+        <Product key={idx} item={product} />
       ))}
     </div>
   );
