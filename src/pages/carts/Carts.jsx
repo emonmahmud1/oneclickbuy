@@ -2,21 +2,20 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addCarts } from "../../redux/features/carts/cartsSlice";
 import CartProduct from "../../components/cartProduct";
+import ConfirmOrderModal from "../../components/ConfirmOrderModal";
 
 const Carts = () => {
   const dispatch = useDispatch();
   const { items } = useSelector((state) => state.carts);
-//   console.log(items);
+  //   console.log(items);
   const product_ids = items?.product_ids
     ? items.product_ids.split(",").map((p) => parseInt(p, 10))
     : [];
 
-//   console.log(product_ids);
-//   filterItems(product_ids);
-
-  const handlecarts = () => {
-    dispatch(addCarts({ product_ids: "1", s_product_qty: "3" }));
+  const handleOrderModal = () => {
+    document.getElementById("orderModal").showModal();
   };
+
   return (
     <>
       {product_ids && product_ids.length > 0 ? (
@@ -35,7 +34,8 @@ const Carts = () => {
 
           <div className="space-y-1 text-right">
             <p>
-              Total amount: <span className="font-semibold">357</span>
+              Total amount:{" "}
+              <span className="font-semibold">{items.cod_amount} Tk</span>
             </p>
             <p className="text-sm dark:text-gray-600">
               Not including taxes and shipping costs
@@ -43,13 +43,14 @@ const Carts = () => {
           </div>
 
           <div className="flex justify-end space-x-4">
-            <button
+            {/* <button
               type="button"
               className="px-6 py-2 border rounded-md dark:border-violet-600"
             >
               Back <span className="sr-only sm:not-sr-only">to shop</span>
-            </button>
+            </button> */}
             <button
+              onClick={handleOrderModal}
               type="button"
               className="px-6 py-2 border rounded-md dark:bg-violet-600 dark:text-gray-50 dark:border-violet-600"
             >
@@ -63,6 +64,10 @@ const Carts = () => {
           <p className="text-3xl">Your cart is empty</p>
         </div>
       )}
+      {/* modal */}
+      <dialog id="orderModal" className="modal">
+        <ConfirmOrderModal />
+      </dialog>
     </>
   );
 };

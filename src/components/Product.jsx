@@ -37,16 +37,7 @@ const Product = ({ item }) => {
   } = item;
   const singleCartqty = useSelector((state)=>productCountCartById(state.carts,id))
   const dispatch = useDispatch();
-  //   "product_ids": "1,2",
-  // "s_product_qty": "2,1",
-  // "c_phone": "01734252112",
-  // "c_name": "test",
-  // "courier": "steadfast",
-  // "address": "mirpur 12 ramzanessamarket",
-  // "advance": null,
-  // "cod_amount": "1250",
-  // "discount_amount": null,
-  // "delivery_charge": "80",
+
   const handleOnCart = () => {
     dispatch(
       addCarts({
@@ -56,7 +47,7 @@ const Product = ({ item }) => {
       })
     );
   };
-  const cart = useSelector((state) => state.carts);
+  // const cart = useSelector((state) => state.carts);
   // console.log(cart);
   return (
     <>
