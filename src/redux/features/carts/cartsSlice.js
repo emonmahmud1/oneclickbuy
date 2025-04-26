@@ -31,7 +31,6 @@ const cartsSlicer = createSlice({
       };
 
       const idxofId = p_ids.indexOf(id);
-      //   console.log(idxofId);
       if (idxofId != -1) {
         p_qtys[idxofId] += 1;
         state.items.cod_amount = currentPrice(state.items.cod_amount, p_price);
@@ -43,26 +42,7 @@ const cartsSlicer = createSlice({
       state.items.product_ids = p_ids.join(",");
       state.items.s_product_qty = p_qtys.join(",");
     },
-    removeFromCart: (state, action) => {
-      const idToRemove = action.payload;
-      console.log(idToRemove);
 
-      const p_ids = state?.items?.product_ids
-        ? state.items.product_ids.split(",").map((p) => parseInt(p, 10))
-        : [];
-      const p_qtys = state?.items?.s_product_qty
-        ? state.items.s_product_qty.split(",").map((q) => parseInt(q, 10))
-        : [];
-      const idxofId = p_ids.indexOf(idToRemove);
-      //   console.log(idxofId);
-      if (idxofId != -1) {
-        p_qtys[idxofId] += 1;
-        p_ids.splice(idxofId, 1);
-        p_qtys.splice(idxofId, 1);
-      }
-      state.items.product_ids = p_ids.join(",");
-      state.items.s_product_qty = p_qtys.join(",");
-    },
     decreasesItem: (state, action) => {
       const idToDec = action.payload.id;
       const p_price = action.payload.buying_price
@@ -78,7 +58,6 @@ const cartsSlicer = createSlice({
         return parseFloat(prev_p || 0) - parseFloat(new_p);
       };
       const idxofId = p_ids.indexOf(idToDec);
-      //   console.log(idxofId);
       if (p_qtys[idxofId] > 1) {
         p_qtys[idxofId] -= 1;
          state.items.cod_amount = currentPrice(state.items.cod_amount, p_price);

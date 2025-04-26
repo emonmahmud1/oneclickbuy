@@ -6,7 +6,6 @@ import { fetchProducts } from "../../redux/features/products/productsSlice";
 const Home = () => {
   const dispatch = useDispatch();
   const { items, isloading, error } = useSelector((state) => state.products);
-  // const singleCart = useSelector((state)=>productCountCartById(state.carts,id))
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);

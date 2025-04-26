@@ -45,7 +45,6 @@ const CartProduct = ({ id }) => {
             <h3 className="text-lg font-semibold leading-snug sm:pr-8">
               {name}
             </h3>
-            {/* <p className="text-sm dark:text-gray-600">{category}</p> */}
           </div>
 
           <div className="text-right">
