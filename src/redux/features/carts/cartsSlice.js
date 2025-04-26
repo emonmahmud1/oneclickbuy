@@ -7,10 +7,7 @@ const cartsSlicer = createSlice({
       product_ids: "",
       s_product_qty: "",
       cod_amount: "",
-    //   c_phone: "",
-    //   c_name: "",
       courier: "steadfast",
-    //   address: "",
       advance: null,
       discount_amount: null,
       delivery_charge: "80",
@@ -46,18 +43,56 @@ const cartsSlicer = createSlice({
       state.items.product_ids = p_ids.join(",");
       state.items.s_product_qty = p_qtys.join(",");
     },
-    // orderProduct: (state, action) => {
-    //   const c_phone = action.payload.c_phone || "";
-    //   const c_name = action.payload.c_name || "";
-    //   const courier = action.payload.courier || "";
-    //   const address = action.payload.address || "";
-    //   const discount_amount = action.payload.discount_amount || null;
-    //   const delivery_charge = action.payload.delivery_charge || "";
+    removeFromCart: (state, action) => {
+      const idToRemove = action.payload;
+      console.log(idToRemove);
 
-    // },
+      const p_ids = state?.items?.product_ids
+        ? state.items.product_ids.split(",").map((p) => parseInt(p, 10))
+        : [];
+      const p_qtys = state?.items?.s_product_qty
+        ? state.items.s_product_qty.split(",").map((q) => parseInt(q, 10))
+        : [];
+      const idxofId = p_ids.indexOf(idToRemove);
+      //   console.log(idxofId);
+      if (idxofId != -1) {
+        p_qtys[idxofId] += 1;
+        p_ids.splice(idxofId, 1);
+        p_qtys.splice(idxofId, 1);
+      }
+      state.items.product_ids = p_ids.join(",");
+      state.items.s_product_qty = p_qtys.join(",");
+    },
+    decreasesItem: (state, action) => {
+      const idToDec = action.payload.id;
+      const p_price = action.payload.buying_price
+      console.log(idToDec);
+
+      const p_ids = state?.items?.product_ids
+        ? state.items.product_ids.split(",").map((p) => parseInt(p, 10))
+        : [];
+      const p_qtys = state?.items?.s_product_qty
+        ? state.items.s_product_qty.split(",").map((q) => parseInt(q, 10))
+        : [];
+         const currentPrice = (prev_p, new_p) => {
+        return parseFloat(prev_p || 0) - parseFloat(new_p);
+      };
+      const idxofId = p_ids.indexOf(idToDec);
+      //   console.log(idxofId);
+      if (p_qtys[idxofId] > 1) {
+        p_qtys[idxofId] -= 1;
+         state.items.cod_amount = currentPrice(state.items.cod_amount, p_price);
+      } else {
+        p_ids.splice(idxofId, 1);
+        p_qtys.splice(idxofId, 1);
+        state.items.cod_amount = currentPrice(state.items.cod_amount, p_price);
+      }
+      state.items.product_ids = p_ids.join(",");
+      state.items.s_product_qty = p_qtys.join(",");
+    },
   },
 });
-export const { addCarts } = cartsSlicer.actions;
+export const { addCarts, removeFromCart,decreasesItem } = cartsSlicer.actions;
 export default cartsSlicer.reducer;
 
 export const productCountCartById = (state, id) => {

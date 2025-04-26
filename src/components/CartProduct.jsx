@@ -1,16 +1,37 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectProductById } from "../redux/features/products/productsSlice";
-import { productCountCartById } from "../redux/features/carts/cartsSlice";
+import {
+  addCarts,
+  decreasesItem,
+  productCountCartById,
+  removeFromCart,
+} from "../redux/features/carts/cartsSlice";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 
 const CartProduct = ({ id }) => {
+  const dispatch = useDispatch();
   const { name, discount_amount, product_images, category, buying_price } =
     useSelector((state) => selectProductById(state.products, id));
   const singleProductCartqty = useSelector((state) =>
     productCountCartById(state.carts, id)
   );
   // console.log(product);
+  const handleDecItem = () => {
+    console.log(typeof id);
+    dispatch(decreasesItem({ id, buying_price }));
+  };
+
+  const handleOnCart = () => {
+    dispatch(
+      addCarts({
+        product_ids: id,
+        s_product_qty: "1",
+        cod_amount: buying_price,
+      })
+    );
+  };
+
   return (
     <div className="flex w-full space-x-2 sm:space-x-4">
       <img
@@ -39,24 +60,9 @@ const CartProduct = ({ id }) => {
             </p>
           </div>
         </div>
-        <div className="flex text-sm divide-x">
-          <button
-            type="button"
-            className="flex items-center px-2 py-1 pl-0 space-x-1"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-              className="w-4 h-4 fill-current"
-            >
-              <path d="M96,472a23.82,23.82,0,0,0,23.579,24H392.421A23.82,23.82,0,0,0,416,472V152H96Zm32-288H384V464H128Z"></path>
-              <rect width="32" height="200" x="168" y="216"></rect>
-              <rect width="32" height="200" x="240" y="216"></rect>
-              <rect width="32" height="200" x="312" y="216"></rect>
-              <path d="M328,88V40c0-13.458-9.488-24-21.6-24H205.6C193.488,16,184,26.542,184,40V88H64v32H448V88ZM216,48h80V88H216Z"></path>
-            </svg>
-            <span>Remove</span>
-          </button>
+        <div className="flex text-sm divide-x gap-4">
+          <button onClick={handleOnCart} className=" btn">+</button>
+          <button onClick={handleDecItem} className="btn">-</button>
         </div>
       </div>
     </div>

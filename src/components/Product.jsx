@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addCarts, productCountCartById } from "../redux/features/carts/cartsSlice";
 import { TbListDetails } from "react-icons/tb";
 import { Link } from "react-router";
+import toast from "react-hot-toast";
 
 const Product = ({ item }) => {
   const {
@@ -46,9 +47,9 @@ const Product = ({ item }) => {
         cod_amount: buying_price,
       })
     );
+    toast.success('Item added to Cart')
   };
-  // const cart = useSelector((state) => state.carts);
-  // console.log(cart);
+
   return (
     <>
       <div className="card bg-base-100  hover:shadow-2xl  hover:translate-y-1 transition-transform duration-300 ease-in-out shadow-md rounded-2xl">

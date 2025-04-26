@@ -10,6 +10,7 @@ import { Provider } from "react-redux";
 import ProductDetails from "./pages/productDetails/ProductDetails";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "./redux/store";
+import { Toaster } from "react-hot-toast";
 const root = document.getElementById("root");
 
 ReactDOM.createRoot(root).render(
@@ -23,6 +24,7 @@ ReactDOM.createRoot(root).render(
             <Route path="/prodcuct-details/:id" element={<ProductDetails />} />
           </Route>
         </Routes>
+        <Toaster/>
       </BrowserRouter>
     </PersistGate>
   </Provider>
