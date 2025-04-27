@@ -5,7 +5,6 @@ import {
   addCarts,
   decreasesItem,
   productCountCartById,
-  removeFromCart,
 } from "../redux/features/carts/cartsSlice";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 
